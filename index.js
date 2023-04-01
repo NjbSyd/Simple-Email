@@ -1,5 +1,6 @@
 const express = require("express");
 const sendMail = require("./sendMail");
+const checkDomainValidity = require("./checkDns");
 const app = express();
 app.use(express.json());
 
@@ -105,6 +106,22 @@ app.post("/mail", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.post("/dns", async (req, res) => {
+    console.log(req.body);
+    const {domain} = req.body;
+    try {
+        const resp = await checkDomainValidity(domain);
+        return res.status(200).json({
+        success: true, message: "Domain checked successfully",
+        resp: resp
+        },);
+    } catch (error) {
+        return res.status(400).json({
+        success: false, message: "Domain not checked",resp: false
+        });
+    }
+});
+
+app.listen(process.env.port||3000, () => {
   console.log("server is running on port 3000");
 });
