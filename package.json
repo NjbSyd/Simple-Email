@@ -1,0 +1,15 @@
+{
+  "name": "mailer",
+  "version": "1.0.0",
+  "description": "mail sender",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mnk",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.1"
+  }
+}
