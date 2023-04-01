@@ -7,13 +7,13 @@ const sendMail = (to, subject, html) => {
       port: 465,
       secure: true,
       auth: {
-        user: "nawazkhan6393@gmail.com",
-        pass: "xhsgpukeogacflml",
+        user: process.env.username,
+        pass: process.env.password
       },
     });
 
     const mailOptions = {
-      from: "nawazkhan6393@gmail.com",
+      from: process.env.username,
       to: to,
       subject: subject,
       html: html,
@@ -23,7 +23,6 @@ const sendMail = (to, subject, html) => {
       if (err) {
         reject(err);
       }
-
       resolve(info);
     });
   });

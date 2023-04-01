@@ -3,20 +3,14 @@ const sendMail = require("./sendMail");
 const app = express();
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
 app.post("/mail", async (req, res) => {
   console.log(req.body);
-  const { to, subject, body } = req.body;
-
+  const {to, subject, body} = req.body;
   const template = `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Email Template</title>
   <style>
     * {
       box-sizing: border-box;
@@ -32,7 +26,7 @@ app.post("/mail", async (req, res) => {
       padding: 20px;
       background-color: #fff;
       border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
     h1 {
       text-align: center;
@@ -68,7 +62,7 @@ app.post("/mail", async (req, res) => {
     .button:hover {
       background-color: #45a049;
     }
-  </style>
+  </style><title>Contact Us</title>
 </head>
 <body>
 <div class="container">
@@ -100,17 +94,13 @@ app.post("/mail", async (req, res) => {
 
   try {
     const resp = await sendMail(to, subject, template);
-    console.log(resp);
     return res.status(200).json({
-      success: true,
-      message: "Email sent successfully",
-    });
+      success: true, message: "Email sent successfully",
+      resp: resp
+    },);
   } catch (error) {
-    console.log(error);
-
     return res.status(400).json({
-      success: false,
-      message: "Email not sent",
+      success: false, message: "Email not sent",resp: error
     });
   }
 });
