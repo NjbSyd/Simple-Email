@@ -101,27 +101,36 @@ app.post("/mail", async (req, res) => {
     },);
   } catch (error) {
     return res.status(400).json({
-      success: false, message: "Email not sent",resp: error
+      success: false, message: "Email not sent", resp: error
     });
   }
 });
 
 app.post("/dns", async (req, res) => {
-    console.log(req);
-    const {domain} = req;
-    try {
-        const resp = await checkDomainValidity(domain);
-        return res.status(200).json({
+  console.log(req.body);
+  const {domain} = req.body;
+  console.log(domain)
+  try {
+    let responseFromCheckDomainValidity = await checkDomainValidity(domain);
+    console.log(responseFromCheckDomainValidity)
+    if (responseFromCheckDomainValidity) {
+      return res.status(200).json({
         success: true, message: "Domain checked successfully",
-        resp: resp
-        },);
-    } catch (error) {
-        return res.status(400).json({
-        success: false, message: "Domain not checked",resp: false
-        });
+        domainValid: true
+      });
+    } else {
+      return res.status(400).json({
+        success: true, message: "Domain not valid", domainValid: false
+      });
     }
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({
+      success: false, message: "Domain not valid", domainValid: false
+    });
+  }
 });
 
-app.listen(process.env.port||3000, () => {
+app.listen(process.env.port || 3000, () => {
   console.log("server is running on port 3000");
 });
