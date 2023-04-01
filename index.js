@@ -108,7 +108,6 @@ app.post("/mail", async (req, res) => {
 
 app.post("/dns", async (req, res) => {
   console.log(req.body);
-  res.send("hello from dns");
   const {domain} = req.body;
   console.log(domain)
   try {
