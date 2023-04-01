@@ -125,7 +125,7 @@ app.post("/dns", async (req, res) => {
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json({
+    return res.status(200).json({
       success: false, message: "Domain not valid", domainValid: false
     });
   }
